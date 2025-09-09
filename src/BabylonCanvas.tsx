@@ -1,12 +1,15 @@
-import React, { useEffect, useRef } from "react";
-import { BasicScene } from "./Examples/BabylonScene"; // Import the BasicScene class
+// No need to import React for JSX transformation in React 17+
+import { useEffect, useRef } from "react";
+import { StandardMaterials } from "./Examples/StandardMaterials"; // Import the BasicScene class
+// import { BasicScene } from "./Examples/BabylonScene"; // Import the BasicScene class
 
 const BabylonCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (canvasRef.current) {
-      new BasicScene(canvasRef.current);
+      new StandardMaterials(canvasRef.current);
+      // new BasicScene(canvasRef.current);
     }
   }, []);
 
