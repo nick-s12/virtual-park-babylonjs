@@ -78,9 +78,20 @@ export class PBR {
     CreateMagic(): PBRMaterial {
         const pbr = new PBRMaterial("pbr", this.scene);
 
-        pbr.roughness = 1;
+        pbr.roughness = 0.7;
+        pbr.environmentIntensity = 1;
 
-        pbr.environmentIntensity = 0.95;
+        pbr.albedoTexture = new Texture("/textures/brick/brick_diffuse.jpg", this.scene);
+
+        pbr.bumpTexture = new Texture("./textures/brick/brick_normal.jpg", this.scene);
+        pbr.invertNormalMapX = true;
+        pbr.invertNormalMapY = true;
+
+        pbr.useAmbientOcclusionFromMetallicTextureRed = true;
+        pbr.useRoughnessFromMetallicTextureGreen = true;
+        pbr.useMetallnessFromMetallicTextureBlue = true;
+
+        pbr.metallicTexture = new Texture("./textures/brick/brick_ao_rough_metal.jpg", this.scene);
 
         return pbr;
     }
