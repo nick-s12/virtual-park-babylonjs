@@ -24,6 +24,7 @@ export class StandardMaterials {
     const hemiLight = new HemisphericLight("hemiLight", new Vector3(0, 1, 0), scene);
     hemiLight.intensity = 1;
 
+    
     const ground = MeshBuilder.CreateGround("ground", { width: 20, height: 20 }, scene);
     const ball = MeshBuilder.CreateSphere("ball", { diameter: 2 }, scene);
     ball.position = new Vector3(0, 1, 0);
