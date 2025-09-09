@@ -33,7 +33,7 @@ export class PBR {
 
 
 
-        // scene.environmentIntensity = 0.25;
+        // scene.environmentIntensity = 0.5;
 
 
         // envTex.onLoadObservable.add(() => {
