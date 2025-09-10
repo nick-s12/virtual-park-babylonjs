@@ -3,7 +3,6 @@ import {
     Engine,
     FreeCamera,
     Vector3,
-    HemisphericLight,
     MeshBuilder,
     SceneLoader,
     AbstractMesh,
@@ -12,12 +11,9 @@ import {
     GizmoManager,
     Light,
     Color3,
-    DirectionalLight,
     PointLight,
     SpotLight,
     ShadowGenerator,
-    Effect,
-    CubeTexture,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 
