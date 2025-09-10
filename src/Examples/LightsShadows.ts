@@ -16,6 +16,8 @@ import {
     PointLight,
     SpotLight,
     ShadowGenerator,
+    Effect,
+    CubeTexture,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 
@@ -40,9 +42,11 @@ export class LightsShadows {
 
     CreateScene(): Scene {
         const scene = new Scene(this.engine);
-        const camera = new FreeCamera("camera", new Vector3(3, 2, -2), this.scene);
+        // const camera = new FreeCamera("camera", new Vector3(3, 2, -2), this.scene);
+        const camera = new FreeCamera("camera", new Vector3(0, 0.75, -8), scene);
         camera.attachControl();
         camera.speed = 0.2;
+
 
         return scene;
     }

@@ -5,8 +5,7 @@ import { BasicScene } from "./Examples/BabylonScene";
 import { PBR } from "./Examples/PBR";
 import { CustomModels } from "./Examples/CustomModels";
 import { LightsShadows } from "./Examples/LightsShadows";
-
-
+import { LoadingScreen } from "./Examples/LoadingScreen";
 
 const BabylonCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -17,7 +16,8 @@ const BabylonCanvas: React.FC = () => {
             // new BasicScene(canvasRef.current);
             // new PBR(canvasRef.current);
             // new CustomModels(canvasRef.current);
-            new LightsShadows(canvasRef.current);
+            // new LightsShadows(canvasRef.current);
+            new LoadingScreen(canvasRef.current);
         }
     }, []);
 

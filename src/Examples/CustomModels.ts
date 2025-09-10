@@ -33,7 +33,6 @@ export class CustomModels {
         const envTex = CubeTexture.CreateFromPrefilteredData(`/environment/sky.env?v=${Date.now()}`, scene);
         scene.environmentTexture = envTex;
         scene.createDefaultSkybox(envTex, true);
-
         scene.environmentIntensity = 1;
 
         return scene;
