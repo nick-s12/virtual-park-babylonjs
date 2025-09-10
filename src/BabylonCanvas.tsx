@@ -1,9 +1,12 @@
 // No need to import React for JSX transformation in React 17+
 import { useEffect, useRef } from "react";
-import { StandardMaterials } from "./Examples/StandardMaterials"; // Import the BasicScene class
-import { BasicScene } from "./Examples/BabylonScene"; // Import the BasicScene class
-import { PBR } from "./Examples/PBR"; // Import the BasicScene class
-import { CustomModels } from "./Examples/CustomModels"; // Import the BasicScene class
+import { StandardMaterials } from "./Examples/StandardMaterials";
+import { BasicScene } from "./Examples/BabylonScene";
+import { PBR } from "./Examples/PBR";
+import { CustomModels } from "./Examples/CustomModels";
+import { LightsShadows } from "./Examples/LightsShadows";
+
+
 
 const BabylonCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,7 +16,8 @@ const BabylonCanvas: React.FC = () => {
             // new StandardMaterials(canvasRef.current);
             // new BasicScene(canvasRef.current);
             // new PBR(canvasRef.current);
-            new CustomModels(canvasRef.current);
+            // new CustomModels(canvasRef.current);
+            new LightsShadows(canvasRef.current);
         }
     }, []);
 
