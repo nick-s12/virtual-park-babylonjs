@@ -8,6 +8,7 @@ import { LightsShadows } from "./Examples/LightsShadows";
 import { LoadingScreen } from "./Examples/LoadingScreen";
 import { CameraDemo } from "./Examples/CameraDemo";
 import { MeshActions } from "./Examples/MeshActions";
+import { FirstPersonController } from "./Examples/FirstPersonController";
 
 const BabylonCanvas: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,7 +22,8 @@ const BabylonCanvas: React.FC = () => {
             // new LightsShadows(canvasRef.current);
             // new LoadingScreen(canvasRef.current);
             // new CameraDemo(canvasRef.current);
-            new MeshActions(canvasRef.current);
+            // new MeshActions(canvasRef.current);
+            new FirstPersonController(canvasRef.current);
 
         }
     }, []);
