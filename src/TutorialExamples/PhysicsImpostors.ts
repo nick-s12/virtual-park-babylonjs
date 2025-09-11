@@ -23,6 +23,8 @@ export class PhysicsImpostors {
     engine: Engine;
     scene: Scene;
     canvas!: HTMLCanvasElement;
+    private handleResize: () => void;
+
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -30,6 +32,10 @@ export class PhysicsImpostors {
         this.scene = this.CreateScene();
 
         this.init();
+
+        // Resize on window change
+        this.handleResize = () => this.engine.resize();
+        window.addEventListener("resize", this.handleResize);
     }
 
 
@@ -171,5 +177,13 @@ export class PhysicsImpostors {
             this.scene
         );
 
+    }
+
+
+
+    dispose() {
+        window.removeEventListener("resize", this.handleResize); // stop listening
+        this.scene.dispose();  // free all meshes, lights, materials in the scene
+        this.engine.dispose(); // release WebGL resources tied to the canvas
     }
 }

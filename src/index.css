@@ -1,3 +1,26 @@
 :root {
     background-color: #b8dca2;
 }
+
+/* Reset all default margins, paddings, borders */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Remove scrollbars unless needed */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+    /* optional, good for Babylon scenes */
+}
+
+/* Make React root container fill screen */
+#root {
+    width: 100%;
+    height: 100%;
+}

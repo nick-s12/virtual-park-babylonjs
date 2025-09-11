@@ -40,13 +40,9 @@ export class CameraDemo {
             "./environment/xmas_bg.env",
             scene
         );
-
         envTex.gammaSpace = false;
-
         envTex.rotationY = Math.PI;
-
         scene.environmentTexture = envTex;
-
         scene.createDefaultSkybox(envTex, true, 1000, 0.25);
 
         return scene;
