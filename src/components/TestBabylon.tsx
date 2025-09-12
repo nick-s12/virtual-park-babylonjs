@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { TestScene } from "../Tests/TestScene";
+import { TestSceneController } from "../Tests/TestSceneController";
 
 const TestBabylon: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,7 +8,8 @@ const TestBabylon: React.FC = () => {
     useEffect(() => {
         let scene: any;
         if (canvasRef.current) {
-            scene = new TestScene(canvasRef.current);
+            // scene = new TestScene(canvasRef.current);
+            scene = new TestSceneController(canvasRef.current);
         }
         return () => {
             scene?.dispose();

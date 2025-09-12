@@ -767,6 +767,16 @@ argparse@^2.0.1:
   resolved "https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz"
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
+babylonjs-charactercontroller@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/babylonjs-charactercontroller/-/babylonjs-charactercontroller-0.4.4.tgz#3aceec7d4643198a3c10ea441ae33c2e4e0e4473"
+  integrity sha512-8wf6CSjE5YWYhW8E3UWXpEp208yec18lhv0th9z95RF5qqWPYHnLSgyKF0rnfzHi5/3Ed9KPb6qBO3fmB+UohA==
+
+babylonjs@^8.27.0:
+  version "8.27.0"
+  resolved "https://registry.yarnpkg.com/babylonjs/-/babylonjs-8.27.0.tgz#8945ded168cd499a5f73c30f63bfd19fca23e41d"
+  integrity sha512-Rf+7IlKoKeHGYcr6X2DSyMrfvopH6qGEb80+h4IAPTA2tNNbGoPNOAFHQ0vHX6A7muM6BzFmXEyoI3mEAQtoEQ==
+
 balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
