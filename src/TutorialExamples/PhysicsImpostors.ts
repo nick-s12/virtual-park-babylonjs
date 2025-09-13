@@ -1,18 +1,15 @@
 import {
-    AbstractMesh,
     CannonJSPlugin,
     Color3,
     CubeTexture,
     Engine,
     FreeCamera,
     HemisphericLight,
-    Mesh,
     MeshBuilder,
     PBRMaterial,
     PhysicsImpostor,
     Scene,
     SceneLoader,
-    StandardMaterial,
     Vector3,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";

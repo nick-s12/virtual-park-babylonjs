@@ -10,14 +10,12 @@ import {
     Color3,
     ArcRotateCamera,
     Mesh,
-    TransformNode,
     Texture,
     HemisphericLight,
     PBRMaterial,
     MeshBuilder,
     Axis,
-    Space,
-    AbstractMesh
+    Space
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 import * as CANNON from "cannon";
