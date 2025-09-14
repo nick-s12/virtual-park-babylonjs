@@ -4,8 +4,6 @@ import {
     CubeTexture,
     Engine,
     FreeCamera,
-    HemisphericLight,
-    Mesh,
     MeshBuilder,
     PBRMaterial,
     PhysicsImpostor,

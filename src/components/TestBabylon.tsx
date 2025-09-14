@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { TestScene } from "../Tests/TestScene";
 import { TestSceneController } from "../Tests/TestSceneController";
 
 const TestBabylon: React.FC = () => {

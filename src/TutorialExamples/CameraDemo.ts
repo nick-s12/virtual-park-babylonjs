@@ -1,7 +1,6 @@
 import {
     Scene,
     Engine,
-    FreeCamera,
     Vector3,
     CubeTexture,
     SceneLoader,

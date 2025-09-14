@@ -20,9 +20,9 @@ import {
 import "@babylonjs/loaders";
 import * as CANNON from "cannon";
 // import { CharacterController } from "babylonjs-charactercontroller";
-// import { loadCharacterController } from "../utils/loadCharacterController";
 
 import { loadCharacterController } from "../utils/loadCharacterController";
+
 
 export class TestSceneController {
     private engine: Engine;
@@ -156,7 +156,7 @@ export class TestSceneController {
         const meshes = models.meshes;
         console.log("meshes:", meshes);
 
-        meshes.map((mesh) => {
+        meshes.map(() => {
             // mesh.showBoundingBox = true;
             // mesh.checkCollisions = true;
         })
@@ -171,7 +171,7 @@ export class TestSceneController {
         const meshes = models.meshes;
         console.log("meshes:", meshes);
 
-        meshes.map((mesh) => {
+        meshes.map(() => {
             // mesh.showBoundingBox = true;
             // mesh.checkCollisions = true;
         })
@@ -188,7 +188,7 @@ export class TestSceneController {
         const meshes = models.meshes;
         console.log("meshes:", meshes);
 
-        meshes.map((mesh) => {
+        meshes.map(() => {
             // mesh.showBoundingBox = true;
             // mesh.checkCollisions = true;
         })
@@ -310,7 +310,7 @@ export class TestSceneController {
         hemiLight.intensity = 0.8;
 
 
-        SceneLoader.ImportMesh("", "models/player/", "Vincent.babylon", this.scene, (meshes, particleSystems, skeletons) => {
+        SceneLoader.ImportMesh("", "models/player/", "Vincent.babylon", this.scene, (meshes, _, skeletons) => {
             let player = meshes[0] as Mesh;
             let skeleton = skeletons[0];
             player.skeleton = skeleton;

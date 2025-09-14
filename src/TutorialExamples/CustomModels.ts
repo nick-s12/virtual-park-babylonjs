@@ -1,4 +1,4 @@
-import { Engine, Scene, FreeCamera, Vector3, HemisphericLight, MeshBuilder, PBRMaterial, Effect, CubeTexture, Texture, SceneLoader } from "@babylonjs/core";
+import { Engine, Scene, FreeCamera, Vector3, MeshBuilder, PBRMaterial, Effect, CubeTexture, Texture, SceneLoader } from "@babylonjs/core";
 import "@babylonjs/loaders";
 
 
