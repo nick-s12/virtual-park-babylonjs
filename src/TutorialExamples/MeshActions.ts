@@ -60,12 +60,23 @@ export class MeshActions {
         this.sphereMat.albedoColor = new Color3(0, 1, 0);
         this.sphereMat.roughness = 1;
 
+        // const { meshes } = await SceneLoader.ImportMeshAsync(
+        //     "",
+        //     "./models/",
+        //     "gifts.glb",
+        //     this.scene
+        // );
+
+
         const { meshes } = await SceneLoader.ImportMeshAsync(
             "",
-            "./models/",
-            "gifts.glb",
+            "https://balanced-harlequin-kingfisher.myfilebase.com/ipfs/QmTtHfAEQFVCE75VJBdFfcZGw5tuNdaCeAyRg1fq7K6Gyz",
+            "",
             this.scene
         );
+
+
+
 
         this.cube = meshes[1];
         this.sphere = meshes[2];

@@ -1,6 +1,8 @@
 // No need to import React for JSX transformation in React 17+
 import { useEffect, useRef } from "react";
-import { PhysicsImpostors } from "../TutorialExamples/PhysicsImpostors";
+// import { PhysicsImpostors } from "../TutorialExamples/PhysicsImpostors";
+import { MeshActions } from "../TutorialExamples/MeshActions";
+
 
 const TutorialBabylon: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,9 +18,9 @@ const TutorialBabylon: React.FC = () => {
             // new LightsShadows(canvasRef.current);
             // new LoadingScreen(canvasRef.current);
             // new CameraDemo(canvasRef.current);
-            // new MeshActions(canvasRef.current);
+            new MeshActions(canvasRef.current);
             // new FirstPersonController(canvasRef.current);
-            scene = new PhysicsImpostors(canvasRef.current);
+            // scene = new PhysicsImpostors(canvasRef.current);
         }
 
         return () => {
