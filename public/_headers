@@ -3,3 +3,6 @@
 
 /*.js
   Content-Type: application/javascript
+
+/models/*
+  Cache-Control: public, max-age=31536000, immutable

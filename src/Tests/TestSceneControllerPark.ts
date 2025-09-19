@@ -13,6 +13,11 @@ import {
     Texture,
     HemisphericLight,
     PBRMaterial,
+    PointLight,
+    Light,
+    LightGizmo,
+    GizmoManager,
+    GlowLayer,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
 import * as CANNON from "cannon";
@@ -26,7 +31,12 @@ export class TestSceneControllerPark {
     private canvas!: HTMLCanvasElement;
     private handleResize: () => void;
 
-    private isNight: boolean = false;
+    private isNight: boolean = true;
+
+
+    private groundLoaded: boolean = false;
+    private playerLoaded: boolean = false;
+    private characterControler: any;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -47,7 +57,63 @@ export class TestSceneControllerPark {
 
         this.handleResize = () => this.engine.resize();
         window.addEventListener("resize", this.handleResize);
+
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "n" || event.key === "N") {
+                this.isNight = !this.isNight;
+                console.log("Night mode:", this.isNight);
+
+                this.onNightModeChanged(); // call a function to update scene
+
+                this.updateEnvironmentForNight();
+
+            }
+        });
     }
+
+
+    private onNightModeChanged() {
+        if (this.isNight) {
+            // this.scene.lights.forEach(light => light.intensity *= 0.3);
+        } else {
+            // this.scene.lights.forEach(light => light.intensity *= 3.33); // reverse dimming
+        }
+
+        if (this.scene.environmentTexture) {
+            this.scene.environmentTexture.dispose();
+        }
+        if (this.scene.getGlowLayerByName("lampGlow")) {
+            this.scene.getGlowLayerByName("lampGlow")?.dispose();
+        }
+
+        this.CreateSkybox(); // call again after toggling isNight
+
+
+    }
+
+
+
+    private updateEnvironmentForNight() {
+        // Update lamp lights
+        this.scene.meshes.forEach(mesh => {
+            if (["defaultMaterial.073", "defaultMaterial.007", "defaultMaterial.039", "defaultMaterial.016", "defaultMaterial.053"].includes(mesh.name)) {
+                const light = this.scene.getLightByName(`pointLight_${mesh.name}`) as PointLight;
+                if (light) {
+                    light.setEnabled(this.isNight);
+                }
+            }
+        });
+
+        // Update ground materials
+        ["GroundRight", "GroundLeft"].forEach(name => {
+            const ground = this.scene.getMeshByName(name);
+            if (ground && ground.material) {
+                (ground.material as StandardMaterial).diffuseColor = this.isNight ? new Color3(1.3, 1.3, 1.3) : new Color3(15, 15, 15);
+            }
+        });
+    }
+
+
 
     CreateScene(): Scene {
         const scene = new Scene(this.engine);
@@ -95,35 +161,91 @@ export class TestSceneControllerPark {
             this.scene.environmentIntensity = 0.8;
         }
 
+
+        const glow = new GlowLayer("lampGlow", this.scene); // create glow layer
+        glow.intensity = 0.3;                          // control how strong the glow is
+
     }
 
+    private tryStartGame(): void {
+        console.log(this.groundLoaded)
+        console.log(this.playerLoaded);
+
+
+        if (this.groundLoaded && this.playerLoaded) {
+            console.log("✅ Both ground and player are ready, starting game...");
+            this.characterControler.start();
+        }
+    }
 
     async CreateEnvironment(): Promise<void> {
         const { meshes } = await SceneLoader.ImportMeshAsync(
             "",
             "./models/",
-            "Park.glb",
+            "Park.glb?v=2",
             // "output_draco.glb",
             this.scene
         );
-
+        this.groundLoaded = true;
+        this.tryStartGame();
 
 
         meshes.map((mesh) => {
-            console.log(mesh);
-            console.log(mesh.name);
+            // console.log(mesh);
+            // console.log(mesh.name);
 
             mesh.checkCollisions = true;
+
+            if (this.isNight) {
+                if (mesh.name == "defaultMaterial.073" ||
+                    mesh.name == "defaultMaterial.007" ||
+                    mesh.name == "defaultMaterial.039" ||
+                    mesh.name == "defaultMaterial.016" ||
+                    mesh.name == "defaultMaterial.053"
+                ) {
+                    if (mesh.material) {
+                        if (mesh.material instanceof PBRMaterial || mesh.material instanceof StandardMaterial) {
+                            (mesh.material as any).maxSimultaneousLights = 100; // or more
+                        }
+                    }
+
+
+                    const pointLight = new PointLight(
+                        `pointLight_${mesh.name}`,
+                        new Vector3(0, 0.7, 0),
+                        this.scene
+                    );
+
+                    // this.CreateGizmos(pointLight);
+
+                    pointLight.diffuse = new Color3(1, 0.9, 0.7); // warm white/yellow
+                    pointLight.intensity = 5;                  // bright enough
+                    pointLight.range = 4;                        // covers small radius around lamp
+
+
+                    pointLight.setEnabled(true);
+                    console.log("Light is enabled:", pointLight.isEnabled());
+
+                    pointLight.parent = mesh;
+
+                }
+            }
 
 
             if (mesh.name === "GroundRight" || mesh.name === "GroundLeft") {
                 mesh.checkCollisions = false;
+
 
                 console.log("GroundRight");
 
                 const material = new StandardMaterial("grassMat", this.scene);
                 material.diffuseTexture = new Texture("textures/grass/grass_1.jpg", this.scene);
 
+                if (material) {
+                    if (material instanceof PBRMaterial || material instanceof StandardMaterial) {
+                        (material as any).maxSimultaneousLights = 100; // or more
+                    }
+                }
 
                 // Cast to Texture to access uScale/vScale
                 const tex = material.diffuseTexture as Texture;
@@ -133,7 +255,7 @@ export class TestSceneControllerPark {
                 // material.emissiveColor = new Color3(0.8, 0.8, 0.8);
 
                 if (this.isNight) {
-                    material.diffuseColor = new Color3(1.9, 1.9, 1.9); // >1 brightens
+                    material.diffuseColor = new Color3(1.3, 1.3, 1.3); // >1 brightens
 
                 } else {
                     material.diffuseColor = new Color3(15, 15, 15); // >1 brightens
@@ -170,6 +292,20 @@ export class TestSceneControllerPark {
                 pbr.useAmbientOcclusionFromMetallicTextureRed = true;
                 pbr.useRoughnessFromMetallicTextureGreen = true;
                 pbr.useMetallnessFromMetallicTextureBlue = true;
+
+
+
+                if (this.isNight) {
+                    pbr.emissiveColor = Color3.Black();      // pavement itself does not emit light
+                    pbr.albedoColor = new Color3(2, 2, 2);     // use neutral albedo for lighting
+                    pbr.roughness = 0.2;
+
+                } else {
+                    pbr.albedoColor = new Color3(3, 3, 3);     // use neutral albedo for lighting
+
+                    pbr.roughness = 0.5;                       // non-reflective surface for better light spread
+
+                }
 
                 console.log("GroundMiddle");
                 mesh.material = pbr;
@@ -230,7 +366,7 @@ export class TestSceneControllerPark {
             player.material = pbr;
 
 
-            player.position = new Vector3(-12, 7, -13);
+            player.position = new Vector3(-12, 15, -13);
 
             player.checkCollisions = true;
             player.ellipsoid = new Vector3(0.5, 1, 0.5);
@@ -271,31 +407,48 @@ export class TestSceneControllerPark {
 
             camera.attachControl(this.canvas, false);
 
-            const cc = new CharacterController(player, camera, this.scene);
+            this.characterControler = new CharacterController(player, camera, this.scene);
 
-            cc.setCameraTarget(new Vector3(0, 1.5, 0) as any);
-            cc.setNoFirstPerson(false);
-            cc.setStepOffset(0.4);
-            cc.setSlopeLimit(30, 60);
+            this.characterControler.setCameraTarget(new Vector3(0, 1.5, 0) as any);
+            this.characterControler.setNoFirstPerson(false);
+            this.characterControler.setStepOffset(0.4);
+            this.characterControler.setSlopeLimit(30, 60);
 
-            cc.setIdleAnim("idle", 1, true);
-            cc.setTurnLeftAnim("turnLeft", 0.5, true);
-            cc.setTurnRightAnim("turnRight", 0.5, true);
-            cc.setWalkBackAnim("walkBack", 0.5, true);
-            cc.setIdleJumpAnim("idleJump", .5, false);
-            cc.setRunJumpAnim("runJump", 0.6, false);
+            this.characterControler.setIdleAnim("idle", 1, true);
+            this.characterControler.setTurnLeftAnim("turnLeft", 0.5, true);
+            this.characterControler.setTurnRightAnim("turnRight", 0.5, true);
+            this.characterControler.setWalkBackAnim("walkBack", 0.5, true);
+            this.characterControler.setIdleJumpAnim("idleJump", .5, false);
+            this.characterControler.setRunJumpAnim("runJump", 0.6, false);
 
 
-            cc.setFallAnim(null as any, 2, false);
-            cc.setSlideBackAnim("slideBack", 1, false)
+            this.characterControler.setFallAnim(null as any, 2, false);
+            this.characterControler.setSlideBackAnim("slideBack", 1, false)
 
-            cc.start();
+            // cc.start();
+
+            this.playerLoaded = true;
+            this.tryStartGame();
         });
 
 
 
 
 
+    }
+
+
+
+    CreateGizmos(customLight: Light): void {
+        const lightGizmo = new LightGizmo();
+        lightGizmo.scaleRatio = 1;
+        lightGizmo.light = customLight;
+
+        const gizmoManager = new GizmoManager(this.scene);
+        gizmoManager.positionGizmoEnabled = true;
+        gizmoManager.rotationGizmoEnabled = true;
+        gizmoManager.usePointerToAttachGizmos = false;
+        gizmoManager.attachToMesh(lightGizmo.attachedMesh);
     }
 
 
