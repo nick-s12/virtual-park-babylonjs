@@ -26,6 +26,8 @@ export class TestSceneControllerPark {
     private canvas!: HTMLCanvasElement;
     private handleResize: () => void;
 
+    private isNight: boolean = false;
+
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.engine = new Engine(this.canvas);
@@ -72,15 +74,27 @@ export class TestSceneControllerPark {
 
 
     CreateSkybox(): void {
+        let envFile;
+        if (this.isNight) {
+            envFile = "./environment/preller_drive_2k.env"
+        } else {
+            envFile = "./environment/park.env"
+        }
         const envTex = CubeTexture.CreateFromPrefilteredData(
-            "./environment/park.env",
+            envFile,
             this.scene
         );
         envTex.gammaSpace = false;
         envTex.rotationY = Math.PI;
         this.scene.environmentTexture = envTex;
         this.scene.createDefaultSkybox(envTex, true, 2000, 0.07);
-        this.scene.environmentIntensity = 0.9;
+
+        if (this.isNight) {
+            this.scene.environmentIntensity = 0.01;
+        } else {
+            this.scene.environmentIntensity = 0.8;
+        }
+
     }
 
 
@@ -117,7 +131,13 @@ export class TestSceneControllerPark {
                 tex.vScale = 2;   // repeats along length
 
                 // material.emissiveColor = new Color3(0.8, 0.8, 0.8);
-                material.diffuseColor = new Color3(15, 15, 15); // >1 brightens
+
+                if (this.isNight) {
+                    material.diffuseColor = new Color3(1.9, 1.9, 1.9); // >1 brightens
+
+                } else {
+                    material.diffuseColor = new Color3(15, 15, 15); // >1 brightens
+                }
 
                 mesh.material = material;
             }
@@ -174,7 +194,13 @@ export class TestSceneControllerPark {
         console.log("CharacterController:", CharacterController);
 
         const hemiLight = new HemisphericLight("hemi", new Vector3(0, 1, 0), this.scene);
-        hemiLight.intensity = 0.8;
+
+
+        if (this.isNight) {
+            hemiLight.intensity = 0.15;
+        } else {
+            hemiLight.intensity = 0.6;
+        }
 
 
         SceneLoader.ImportMesh("", "models/player/", "Vincent.babylon", this.scene, (meshes, _, skeletons) => {
