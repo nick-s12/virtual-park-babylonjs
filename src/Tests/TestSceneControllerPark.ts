@@ -33,10 +33,24 @@ export class TestSceneControllerPark {
 
     private isNight: boolean = true;
 
-
     private groundLoaded: boolean = false;
     private playerLoaded: boolean = false;
     private characterControler: any;
+
+    private LAMP_LIGHTS_MESHES: string[] = [
+        "defaultMaterial.073",
+        "defaultMaterial.038",
+        "defaultMaterial.007",
+        "defaultMaterial.060",
+        "defaultMaterial.104",
+
+
+        "defaultMaterial.039",
+        "defaultMaterial.093",
+        "defaultMaterial.016",
+        "defaultMaterial.080",
+        // "defaultMaterial.112",
+    ]
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -96,7 +110,7 @@ export class TestSceneControllerPark {
     private updateEnvironmentForNight() {
         // Update lamp lights
         this.scene.meshes.forEach(mesh => {
-            if (["defaultMaterial.073", "defaultMaterial.007", "defaultMaterial.039", "defaultMaterial.016", "defaultMaterial.053"].includes(mesh.name)) {
+            if (this.LAMP_LIGHTS_MESHES.includes(mesh.name)) {
                 const light = this.scene.getLightByName(`pointLight_${mesh.name}`) as PointLight;
                 if (light) {
                     light.setEnabled(this.isNight);
@@ -182,7 +196,7 @@ export class TestSceneControllerPark {
         const { meshes } = await SceneLoader.ImportMeshAsync(
             "",
             "./models/",
-            "Park.glb?v=2",
+            "Park_new_compress.glb?v=2",
             // "output_draco.glb",
             this.scene
         );
@@ -197,12 +211,16 @@ export class TestSceneControllerPark {
             mesh.checkCollisions = true;
 
             if (this.isNight) {
-                if (mesh.name == "defaultMaterial.073" ||
-                    mesh.name == "defaultMaterial.007" ||
-                    mesh.name == "defaultMaterial.039" ||
-                    mesh.name == "defaultMaterial.016" ||
-                    mesh.name == "defaultMaterial.053"
-                ) {
+                if (this.LAMP_LIGHTS_MESHES.includes(mesh.name)) {
+
+                    // const lampRoot = this.scene.getTransformNodeByName("Lamp_L_2.006");
+                    // console.log(lampRoot);
+                    // const lampMeshes = lampRoot?.getChildMeshes();
+                    // console.log(lampMeshes);
+
+
+
+
                     if (mesh.material) {
                         if (mesh.material instanceof PBRMaterial || mesh.material instanceof StandardMaterial) {
                             (mesh.material as any).maxSimultaneousLights = 100; // or more
@@ -225,6 +243,16 @@ export class TestSceneControllerPark {
 
                     pointLight.setEnabled(true);
                     console.log("Light is enabled:", pointLight.isEnabled());
+
+
+                    // ✅ Make sure light affects only its mesh
+                    // pointLight.includedOnlyMeshes = [...lampMeshes as any];
+                    // pointLight.includedOnlyMeshes = [
+                    //     ...lampMeshes as any,
+                    //     this.scene.getMeshByName("GroundMiddle"),
+                    //     this.scene.getMeshByName("GroundRight"),
+                    //     this.scene.getMeshByName("GroundLeft"),
+                    // ];
 
                     pointLight.parent = mesh;
 
