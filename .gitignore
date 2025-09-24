@@ -13,7 +13,7 @@ dist-ssr
 *.local
 
 
-public_old/*
+public_old/
 
 
 # Editor directories and files

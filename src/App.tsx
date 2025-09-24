@@ -1,14 +1,11 @@
 import React from 'react';
-import TestBabylon from './components/TestBabylon';
+import ParkPage from './components/ParkPage';
 import { Route, Routes } from 'react-router-dom';
 
 const App: React.FC = () => {
     return (
         <Routes>
-            {/* <Route path="/" element={<TutorialBabylon />} /> */}
-            <Route path="/" element={<TestBabylon />} />
-
-            {/* <Route path="/test" element={<TestBabylon />} /> */}
+            <Route path="/" element={<ParkPage />} />
         </Routes>
     )
 };
