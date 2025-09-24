@@ -56,7 +56,7 @@ export class ParkScene {
 
         this.CreateEnvironment();
 
-        this.CreateCamera_1();
+        this.CreateCameraController();
 
         this.engine.runRenderLoop(() => {
             this.scene.render();
@@ -134,7 +134,7 @@ export class ParkScene {
     CreateSkybox(): void {
         let envFile;
         if (this.isNight) {
-            envFile = "./environment/preller_drive_2k.env"
+            envFile = "./environment/night.env"
         } else {
             envFile = "./environment/park.env"
         }
@@ -270,7 +270,7 @@ export class ParkScene {
     }
 
 
-    async CreateCamera_1(): Promise<void> {
+    async CreateCameraController(): Promise<void> {
         const cameraTemp = new FreeCamera("camera", new Vector3(0, 20, -20), this.scene);
         cameraTemp.rotation = new Vector3(Math.PI / 6, 0, 0);
         cameraTemp.attachControl(this.canvas, true);
