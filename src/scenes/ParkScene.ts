@@ -68,12 +68,8 @@ export class ParkScene {
         window.addEventListener("keydown", (event) => {
             if (event.key === "n" || event.key === "N") {
                 this.isNight = !this.isNight;
-                console.log("Night mode:", this.isNight);
-
-                this.onNightModeChanged(); // call a function to update scene
-
+                this.onNightModeChanged();
                 this.updateEnvironmentForNight();
-
             }
         });
     }
@@ -296,8 +292,6 @@ export class ParkScene {
 
             let sm = player.material as StandardMaterial;
             if (sm.diffuseTexture != null) {
-                console.log("diffuseTexture:", sm.diffuseTexture);
-
                 sm.backFaceCulling = true;
                 sm.ambientColor = new Color3(1, 1, 1);
                 sm.emissiveColor = new Color3(1, 1, 1); // Slight boost to avoid pitch-black in low light
@@ -323,7 +317,6 @@ export class ParkScene {
             let beta = Math.PI / 2.5;
             let target = new Vector3(player.position.x, player.position.y + 1.5, player.position.z);
 
-            console.log("laoding meshes 1.1");
             let camera = new ArcRotateCamera("ArcRotateCamera", alpha, beta, 5, target, this.scene);
 
             this.scene.activeCamera = camera;  // <---- CRUCIAL
