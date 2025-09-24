@@ -14,9 +14,6 @@ import {
     HemisphericLight,
     PBRMaterial,
     PointLight,
-    Light,
-    LightGizmo,
-    GizmoManager,
     GlowLayer,
 } from "@babylonjs/core";
 import "@babylonjs/loaders";
